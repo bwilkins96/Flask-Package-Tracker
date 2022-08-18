@@ -8,6 +8,7 @@
 </head>
 <body>
     <form method="post" action="/new_package">
+        {{ form.csrf_token }}
         <div>
             {{ form.sender.label }}
             {{ form.sender }}

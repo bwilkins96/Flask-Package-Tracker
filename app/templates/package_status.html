@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Package Status</title>
+</head>
+<body>
+    <a href="/new_package">New Package Form</a>
+    <li>
+        {% for package in packages %}
+            <ul>
+                <div>id: {{ package.id }}</div>
+                <div>sender: {{ package.sender }}</div>
+                <div>recipient: {{ package.recipient }}</div>
+                <div>origin: {{ package.origin }}</div>
+                <div>destination: {{ package.destination }}</div>
+                <div>location: {{ package.location }}</div>
+            </ul>
+        {% endfor %}
+    </li>
+</body>
+</html>

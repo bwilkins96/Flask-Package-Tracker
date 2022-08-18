@@ -18,8 +18,8 @@ features:
 
 ## Phase 0: Examine the starter project
 
-There isn't much here yet!  Your colleague has provided a file with some 
-utilities that will be useful during this project. You'll be building the rest 
+There isn't much here yet!  Your colleague has provided a file with some
+utilities that will be useful during this project. You'll be building the rest
 yourself!
 
 ## Phase 1: Initial application setup
@@ -82,10 +82,10 @@ Add a new route for `/new_package` that returns
 `render_template('shipping_request.html')`.  Don't forget to enable both **GET**
 and **POST** on this endpoint.
 
-In the app folder create a folder called `templates` and add `shipping_request.html` to it.  
+In the app folder create a folder called `templates` and add `shipping_request.html` to it.
 
 In the `app` folder add a file called `shipping_form.py`.  Create a class
-for your form with the following elements.  
+for your form with the following elements.
 
 As appropriate in each new document, build a class extending `FlaskForm` and set
 up the form to handle `wtforms` inputs for the following:
@@ -105,24 +105,24 @@ starter.
 from map.map import map
 ```
 
-HINT: You'll need to do some processing here.  `SelectField` expects either a 
-list of **tuples** in the format `(value, text)` or a list of **strings**. Note 
-that under the hood the `SelectField` will use the value of the string as both 
-the `value` and the `text`, so the tuple comes in handy when you want them to be 
+HINT: You'll need to do some processing here.  `SelectField` expects either a
+list of **tuples** in the format `(value, text)` or a list of **strings**. Note
+that under the hood the `SelectField` will use the value of the string as both
+the `value` and the `text`, so the tuple comes in handy when you want them to be
 different.
 
-ALSO NOTE: Any origin can go to any destination.  The value side of the 
+ALSO NOTE: Any origin can go to any destination.  The value side of the
 key-value pair is used for a progression algorithm later in the project.
 
 Import `DataRequired` from `wtforms.validators` and use it to make all fields
 mandatory.
 
-Back in your `/new_package` route, import and create an instance of your form 
-class and pass it to your jinja template, `shipping_request.html`. Open your 
-template and write your form. (Hint: reference the form from the Order Up 
+Back in your `/new_package` route, import and create an instance of your form
+class and pass it to your jinja template, `shipping_request.html`. Open your
+template and write your form. (Hint: reference the form from the Order Up
 project if you want a guide)
 
-On a successful post, this route should **redirect** the user to the root 
+On a successful post, this route should **redirect** the user to the root
 endpoint. You'll add a display there later to track packages.
 
 ## Phase 2: Adding a database
@@ -144,7 +144,10 @@ pipenv install  psycopg2-binary SQLAlchemy Flask-SQLAlchemy
 
 ### Create a database
 Set up a **PostgreSQL** database with a user, name, and password appropriate for
-this project.  
+this project.
+
+-- package_tracker AA2022 --
+-- package_dev --
 
 You will need to a table called `packages` with the following fields:
 
@@ -278,7 +281,7 @@ if form.validate_on_submit():
     print(form.data)
     return redirect('/')
 
-# Output: 
+# Output:
 # {'sender_name': 'a', 'recipient_name': 'b', 'origin': 'Los Angeles', 'destination': 'Denver', 'submit': True, 'csrf_token': 'secret_token_removed_for_security'}
 ```
 
@@ -301,7 +304,7 @@ db.init_app(app)
 ```
 
 Instantiate a `Package` with the form data as ****kwargs**.  The package will
-start at the origin, so set location to be the origin. 
+start at the origin, so set location to be the origin.
 
 ```Python
 if form.validate_on_submit():
