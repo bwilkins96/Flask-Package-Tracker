@@ -52,7 +52,8 @@ def advance_delivery(location, destination):
     if location == destination:
         return DELIVERED
 
-    path = find_shortest_path(location, destination)
+    #path = find_shortest_path(location, destination)
+    path = find_shortest_path_dij(map_dij, location, destination)
     # Safe to say there is a next city if we get here
     return path[1]
 
@@ -80,15 +81,48 @@ map_dij = {
 }
 
 # map is designated as a parameter instead of referencing map_dij directly from the higher scope
-# This allows for the function to be dynamic. 
+# This allows for the function to be dynamic.
 # It is used in the testing examples below on a simpler map.
+def lowest_node(dist, visited):
+    lowest = None
+    val = float('inf')
+
+    for node in dist:
+        if node not in visited and dist[node] < val:
+            lowest = node
+            val = dist[node]
+
+    return lowest
+
 def find_shortest_path_dij(map, start, end):
-    pass
-    # Your code here
+    current = start
+    visited = set()
+    distance = {}
+    path = {}
+
+    for node in map:
+        distance[node] = float('inf')
+        path[node] = [start]
+
+    distance[start] = 0
+
+    while current:
+        for node in map[current]:
+            dist = distance[current] + node[1]
+
+            if dist < distance[node[0]]:
+                distance[node[0]] = dist
+                path[node[0]] = [*path[current], node[0]]
+
+        visited.add(current)
+        current = lowest_node(distance, visited)
+
+    return path[end]
+
 
 # PHASE TWO Testing
-# print("BFS:", find_shortest_path("Seattle", "Washington D.C."))  # BFS: ['Seattle', 'Washington D.C.']
-# print("Dij:", find_shortest_path_dij(map_dij, "Seattle", "Washington D.C."))  # Dij: ['Seattle', 'San Francisco', 'Denver', 'Kansas City', 'Chicago', 'New York', 'Washington D.C.']
+#print("BFS:", find_shortest_path("Seattle", "Washington D.C."))  # BFS: ['Seattle', 'Washington D.C.']
+#print("Dij:", find_shortest_path_dij(map_dij, "Seattle", "Washington D.C."))  # Dij: ['Seattle', 'San Francisco', 'Denver', 'Kansas City', 'Chicago', 'New York', 'Washington D.C.']
 
 
 # Simpler example
@@ -121,6 +155,6 @@ simple_map_dij = {
 '''
 
 # PHASE TWO Testing with simpler map
-# print("Dij:", find_shortest_path_dij(simple_map_dij, "A", "B"))  # Dij: ['A', 'B']
-# print("Dij:", find_shortest_path_dij(simple_map_dij, "A", "E"))  # Dij: ['A', 'F', 'E']
-# print("Dij:", find_shortest_path_dij(simple_map_dij, "C", "F"))  # Dij: ['C', 'D', 'E', 'F']
+#print("Dij:", find_shortest_path_dij(simple_map_dij, "A", "B"))  # Dij: ['A', 'B']
+#print("Dij:", find_shortest_path_dij(simple_map_dij, "A", "E"))  # Dij: ['A', 'F', 'E']
+#print("Dij:", find_shortest_path_dij(simple_map_dij, "C", "F"))  # Dij: ['C', 'D', 'E', 'F']
