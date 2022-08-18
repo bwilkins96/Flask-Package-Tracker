@@ -1,5 +1,5 @@
 from flask_sqlalchemy import SQLAlchemy
-from map.map import advance_delivery, DELIVERED
+from map.map import advance_delivery
 
 db = SQLAlchemy()
 
@@ -18,7 +18,9 @@ class Package(db.Model):
         packages = Package.query.all()
 
         for package in packages:
-            if package.location is not DELIVERED:
+            if package.location != 'Delivered':
                 package.location = advance_delivery(package.location, package.destination)
+            else:
+                db.session.delete(package)
 
         db.session.commit()
